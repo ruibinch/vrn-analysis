@@ -12,11 +12,14 @@ def main():
     spark, log, config = start_spark(
         app_name='vrn_analysis',
         files=['configs/etl_config.json'])
+    sc = spark.sparkContext
 
     log.info('ETL job running')
 
     # execute ETL pipeline
-    data = extract.run(spark)
+    data = extract.run(sc,
+                       config['gsheet_spreadsheet_id'],
+                       config['gsheet_input_ws_name'])
     data_transformed = transform.run(data)
     load.run(data_transformed)
 
