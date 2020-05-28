@@ -4,12 +4,17 @@ from os import environ, listdir, path
 import json
 from pyspark import SparkFiles
 from pyspark.sql import SparkSession
+from typing import Tuple
 
 from . import logging
 
 
-def start_spark(app_name, master='local[*]', jar_packages=None,
-                files=None, spark_config=None):
+def start_spark(app_name: str,
+                master: str ='local[*]',
+                jar_packages: list = None,
+                files: list = None,
+                spark_config: dict = None) \
+                -> Tuple[SparkSession, logging.Log4j, dict]:
     """Start Spark session, get Spark logger and load config files.
 
     Start a Spark session on the worker node and register the Spark
@@ -101,9 +106,9 @@ def start_spark(app_name, master='local[*]', jar_packages=None,
         path_to_config_file = path.join(spark_files_dir, config_files[0])
         with open(path_to_config_file, 'r') as config_file:
             config_dict = json.load(config_file)
-        spark_logger.warn('loaded config from ' + config_files[0])
+        spark_logger.warn('Loaded config from ' + config_files[0])
     else:
-        spark_logger.warn('no config file found')
+        spark_logger.warn('No config file found')
         config_dict = None
 
     return spark_sess, spark_logger, config_dict
