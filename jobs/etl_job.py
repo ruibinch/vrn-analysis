@@ -12,8 +12,8 @@ def main():
 
     log.info('ETL job running')
 
-    # Extract phase: get VRN + Prices sheets
-    rdd_vrn, rdd_prices = extract.run(
+    # Extract phase: get VRN + Prices sheets as RDDs
+    vrn_rdd, prices_rdd = extract.run(
         sc, 
         log,
         config['gsheet_spreadsheet_id'],
@@ -21,10 +21,15 @@ def main():
         config['gsheet_ws_prices'])
 
     # Transform phase: Convert each car model to a price
-    data_transformed = transform.run(rdd_vrn, rdd_prices)
+    # Get VRN data back as a list of lists
+    vrn_rdd_tfm, prices_rdd_tfm = transform.run(
+        log,
+        vrn_rdd,
+        prices_rdd)
 
-    # Load phase: Load the transformed data as a CSV and upload back to GSheets
-    load.run(data_transformed)
+    # Load phase: Load the transformed RDDs as CSVs and upload back to GSheets
+    n_cols = len(vrn_rdd.take(1)[0])
+    # load.run(vrn_data_tfm)
 
     log.info('ETL job finished')
     spark.stop()
