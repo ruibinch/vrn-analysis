@@ -1,4 +1,4 @@
-from pyspark import SparkSession
+from pyspark.sql import SparkSession
 
 """
 This module contains a class that wraps the log4j object instantiated
@@ -25,10 +25,11 @@ class Log4j(object):
         self.logger.error(message)
         return None
         
-    def warn(self, message: str) -> None:
-        self.logger.warn(message)
-        return None
-        
     def info(self, message: str) -> None:
         self.logger.info(message)
         return None
+
+    def debug(self, message: str) -> None:
+        self.logger.debug(message)
+        return None
+        

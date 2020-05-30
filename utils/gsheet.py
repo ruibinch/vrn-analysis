@@ -1,8 +1,8 @@
 import gspread
-from typing import Union
+from typing import List
 
 def load_worksheet(spreadsheet_id: str,
-                   ws_title: str) -> Union[list, list]:
+                   ws_title: str) -> List[List[str]]:
     """Loads an individual worksheet from the sheet in Google Sheets.
 
     Args:
@@ -19,7 +19,7 @@ def load_worksheet(spreadsheet_id: str,
     ws = sheet.worksheet(ws_title)
     return ws.get_all_values()
 
-def save_to_worksheet(ws_title: str, data: Union[list, list]) -> None:
+def save_to_worksheet(ws_title: str, data: List[List[str]]) -> None:
     """Saves the data to the specified worksheet."""
 
     # TODO: most likely needed

@@ -13,8 +13,8 @@ Extract phase of the ETL pipeline.
 def run(sc: SparkContext,
         log: logging.Log4j,
         spreadsheet_id: str,
-        ws_title_vrn: str,
-        ws_title_prices: str) -> Tuple[RDD, RDD]:
+        vrn_ws_title: str,
+        prices_ws_title: str) -> Tuple[RDD, RDD]:
     """Runner of Extract phase.
     
     Loads the "VRN" and "Prices" worksheets that contains the car details
@@ -24,20 +24,21 @@ def run(sc: SparkContext,
         sc: SparkContext object
         log: Log4j object
         spreadsheet_id: Google Sheets ID
-        ws_title_vrn: Title of VRN worksheet
-        ws_title_prices: Title of car prices worksheet
+        vrn_ws_title: Title of VRN worksheet
+        prices_ws_title: Title of car prices worksheet
 
     Returns:
-        PySpark RDD
+        "VRN" worksheet as a list of lists in an RDD
+        "Prices" worksheet as a list of lists in an RDD
     """
 
-    data_vrn = gsheet.load_worksheet(spreadsheet_id, ws_title_vrn)
+    vrn_data = gsheet.load_worksheet(spreadsheet_id, vrn_ws_title)
     # FIXME: only include rows from "SLL" onwards for now
-    data_vrn = [data_vrn[0], *data_vrn[40:]]
-    log.info(f'"{ws_title_vrn}" worksheet loaded')
+    vrn_data = [vrn_data[0], *vrn_data[40:]]
+    log.info(f'"{vrn_ws_title}" worksheet loaded')
 
-    data_prices = gsheet.load_worksheet(spreadsheet_id, ws_title_prices)
-    data_prices = data_prices[1:] # remove header column
-    log.info(f'"{ws_title_prices}" worksheet loaded')
+    prices_data = gsheet.load_worksheet(spreadsheet_id, prices_ws_title)
+    prices_data = prices_data[1:] # remove header column
+    log.info(f'"{prices_ws_title}" worksheet loaded')
 
-    return sc.parallelize(data_vrn), sc.parallelize(data_prices)
+    return sc.parallelize(vrn_data), sc.parallelize(prices_data)
