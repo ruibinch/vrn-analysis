@@ -8,7 +8,6 @@ from typing import Tuple
 
 from . import logging
 
-
 def start_spark(app_name: str,
                 master: str ='local[*]',
                 jar_packages: list = None,
@@ -106,9 +105,9 @@ def start_spark(app_name: str,
         path_to_config_file = path.join(spark_files_dir, config_files[0])
         with open(path_to_config_file, 'r') as config_file:
             config_dict = json.load(config_file)
-        spark_logger.warn('Loaded config from ' + config_files[0])
+        spark_logger.debug('Loaded config from ' + config_files[0])
     else:
-        spark_logger.warn('No config file found')
+        spark_logger.debug('No config file found')
         config_dict = None
 
     return spark_sess, spark_logger, config_dict

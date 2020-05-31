@@ -34,8 +34,6 @@ def run(sc: SparkContext,
     ws_title_prices = config[constants.CONFIG_GSHEET_WS_PRICES]
 
     vrn_data = gsheet.load_worksheet(spreadsheet_id, ws_title_vrn)
-    # FIXME: only include rows from "SLL" onwards for now
-    vrn_data = [vrn_data[0], *vrn_data[40:]]
     log.info(f'"{ws_title_vrn}" worksheet loaded')
 
     prices_data = gsheet.load_worksheet(spreadsheet_id, ws_title_prices)

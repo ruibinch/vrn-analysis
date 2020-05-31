@@ -29,11 +29,11 @@ def save_to_worksheet(spreadsheet_id: str,
     
     Steps:
     1. Add a new row to the end.
-    2. Delete rows from row 2 till the 2nd-last row (omit header row).
-    3. Insert new data from row 2 onwards.
+    2. Delete rows from `start_row_idx` till the 2nd-last row.
+    3. Insert new data from `start_row_idx` onwards.
 
     Args:
-        spreadsheet_id: Google Sheets IDb
+        spreadsheet_id: Google Sheets ID
         ws_title: Worksheet title
         data: New data, in a list of lists
         keep_header_row: Whether the header row should be kept
@@ -56,7 +56,6 @@ def save_to_worksheet(spreadsheet_id: str,
     ws.delete_rows(start_row_idx, ws.row_count - 1)
     # 3. Insert new data from start_row_idx onwards.
     resp = ws.insert_rows(data, start_row_idx)
-    print(resp)
 
     return {
         constants.UPDATED_RANGE: resp[constants.UPDATES][constants.UPDATED_RANGE],
