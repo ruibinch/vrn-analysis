@@ -28,7 +28,12 @@ def main():
 
     # Load phase: Load the transformed RDDs as CSVs and upload back to GSheets
     n_cols = len(vrn_rdd.take(1)[0])
-    # load.run(vrn_data_tfm)
+    load.run(
+        log,
+        config,
+        n_cols,
+        vrn_rdd_tfm,
+        prices_rdd_tfm)
 
     log.info('ETL job finished')
     spark.stop()

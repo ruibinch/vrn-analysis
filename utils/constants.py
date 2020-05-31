@@ -10,3 +10,8 @@ CONFIG_GSHEET_WS_VRN = 'gsheet_ws_vrn'
 # Fixed constants
 GSHEET_PRICES_HEADER_ROW = ['Make', 'Model', 'Price']
 ERROR_MISSING_PRICE = 'MISSING_PRICE:'
+
+# General strings
+UPDATED_RANGE = 'updatedRange'
+UPDATED_ROWS = 'updatedRows'
+UPDATES = 'updates'
