@@ -16,12 +16,11 @@ def main():
     vrn_rdd, prices_rdd = extract.run(
         sc, 
         log,
-        config['gsheet_spreadsheet_id'],
-        config['gsheet_ws_vrn'],
-        config['gsheet_ws_prices'])
+        config)
 
-    # Transform phase: Convert each car model to a price
-    # Get VRN data back as a list of lists
+    # Transform phase:
+    # convert each car model to a price
+    # update prices RDD with any new car types 
     vrn_rdd_tfm, prices_rdd_tfm = transform.run(
         log,
         vrn_rdd,

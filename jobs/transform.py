@@ -1,4 +1,3 @@
-from pyspark import SparkContext
 from pyspark.rdd import RDD
 import re
 from typing import Dict, Generator, List, Union, Tuple
@@ -77,25 +76,24 @@ def _add_new_car_types(log: logging.Log4j,
         Transformed car prices RDD
     """
 
-    # Create a RDD of new car types
-    # Reshape it in the form of [{make}, {model}, "0"]
+    # create a RDD of new car types
+    # reshape it in the form of [{make}, {model}, "0"]
     prices_new_rdd = vrn_rdd_tfm \
         .filter(lambda x: constants.ERROR_MISSING_PRICE in x) \
         .map(lambda x: x.replace(constants.ERROR_MISSING_PRICE, '')) \
         .map(lambda x: [*x.split(' / '), '0']) \
 
     car_types_new = [f'{x[0]} / {x[1]}' for x in prices_new_rdd.collect()]
-    # log.info(f'New car types found: {car_types_new}')
+    log.info(f'New car types found: {car_types_new}')
 
-    # Join the 2 prices RDDs together
+    # join the 2 prices RDDs together
+    # sort by make, then model name
     prices_rdd_tfm = prices_rdd \
         .union(prices_new_rdd) \
         .sortBy(lambda x: x[1]) \
         .sortBy(lambda x: x[0])
 
     return prices_rdd_tfm
-
-# Main method
 
 def run(log: logging.Log4j,
         vrn_rdd: RDD,

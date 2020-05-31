@@ -4,7 +4,7 @@ from pyspark.rdd import RDD
 from typing import Dict, List, Tuple
 
 from helpers import logging
-from utils import gsheet
+from utils import constants, gsheet
 
 """
 Extract phase of the ETL pipeline.
@@ -12,9 +12,7 @@ Extract phase of the ETL pipeline.
 
 def run(sc: SparkContext,
         log: logging.Log4j,
-        spreadsheet_id: str,
-        vrn_ws_title: str,
-        prices_ws_title: str) -> Tuple[RDD, RDD]:
+        config: Dict[str, str]) -> Tuple[RDD, RDD]:
     """Runner of Extract phase.
     
     Loads the "VRN" and "Prices" worksheets that contains the car details
@@ -23,22 +21,25 @@ def run(sc: SparkContext,
     Args:
         sc: SparkContext object
         log: Log4j object
-        spreadsheet_id: Google Sheets ID
-        vrn_ws_title: Title of VRN worksheet
-        prices_ws_title: Title of car prices worksheet
+        config: Key-value mappings of config values
 
     Returns:
         "VRN" worksheet as a list of lists in an RDD
         "Prices" worksheet as a list of lists in an RDD
     """
 
-    vrn_data = gsheet.load_worksheet(spreadsheet_id, vrn_ws_title)
+    # config values used
+    spreadsheet_id = config[constants.CONFIG_GSHEET_SPREADSHEET_ID]
+    ws_title_vrn = config[constants.CONFIG_GSHEET_WS_VRN]
+    ws_title_prices = config[constants.CONFIG_GSHEET_WS_PRICES]
+
+    vrn_data = gsheet.load_worksheet(spreadsheet_id, ws_title_vrn)
     # FIXME: only include rows from "SLL" onwards for now
     vrn_data = [vrn_data[0], *vrn_data[40:]]
-    log.info(f'"{vrn_ws_title}" worksheet loaded')
+    log.info(f'"{ws_title_vrn}" worksheet loaded')
 
-    prices_data = gsheet.load_worksheet(spreadsheet_id, prices_ws_title)
+    prices_data = gsheet.load_worksheet(spreadsheet_id, ws_title_prices)
     prices_data = prices_data[1:] # remove header column
-    log.info(f'"{prices_ws_title}" worksheet loaded')
+    log.info(f'"{ws_title_prices}" worksheet loaded')
 
     return sc.parallelize(vrn_data), sc.parallelize(prices_data)
