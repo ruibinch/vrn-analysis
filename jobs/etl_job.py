@@ -19,9 +19,10 @@ def main():
         config)
 
     # Transform phase:
+    # perform cleaning on car model names
     # convert each car model to a price
     # update prices RDD with any new car types 
-    vrn_rdd_tfm, prices_rdd_tfm = transform.run(
+    vrn_rdd_tfm, results_rdd, prices_rdd_tfm = transform.run(
         log,
         vrn_rdd,
         prices_rdd)
@@ -33,6 +34,7 @@ def main():
         config,
         n_cols,
         vrn_rdd_tfm,
+        results_rdd,
         prices_rdd_tfm)
 
     log.info('ETL job finished')

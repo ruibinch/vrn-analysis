@@ -57,7 +57,7 @@ def _car_type_to_price(prices: Dict[str, str],
         return f'{constants.ERROR_MISSING_PRICE}{s}'
 
 def _add_new_car_types(log: logging.Log4j,
-                       vrn_rdd_tfm: RDD,
+                       results_rdd: RDD,
                        prices_rdd: RDD) -> List[List[str]]:
     """Adds any new car types found to the overall prices dict.
 
@@ -69,7 +69,7 @@ def _add_new_car_types(log: logging.Log4j,
 
     Args:
         log: Log4j object
-        vrn_rdd_tfm: Transformed VRN RDD
+        results_rdd: Results RDD
         prices_rdd: Car prices RDD
     
     Returns:
@@ -78,7 +78,7 @@ def _add_new_car_types(log: logging.Log4j,
 
     # create a RDD of new car types
     # reshape it in the form of [{make}, {model}, "0"]
-    prices_new_rdd = vrn_rdd_tfm \
+    prices_new_rdd = results_rdd \
         .filter(lambda x: constants.ERROR_MISSING_PRICE in x) \
         .map(lambda x: x.replace(constants.ERROR_MISSING_PRICE, '')) \
         .map(lambda x: [*x.split(' / '), '0']) \
@@ -97,7 +97,7 @@ def _add_new_car_types(log: logging.Log4j,
 
 def run(log: logging.Log4j,
         vrn_rdd: RDD,
-        prices_rdd: RDD) -> Tuple[RDD, RDD]:
+        prices_rdd: RDD) -> Tuple[RDD, RDD, RDD]:
     """Runner of Transform phase.
 
     Args:
@@ -107,22 +107,25 @@ def run(log: logging.Log4j,
 
     Returns:
         Transformed VRN RDD
+        Results RDD
         Transformed car prices RDD
     """
 
     # get car prices as a dict
     prices_dict = _get_prices_dict(prices_rdd)
 
-    # 1. Basic cleaning of raw data
-    # 2. Cleans the car model name
-    # 3. Finds the price mapping for each car type
+    # Basic cleaning of raw data
+    # Cleans the car model name
     vrn_rdd_tfm = vrn_rdd \
         .flatMap(lambda x: x) \
         .map(lambda x: cleaners.clean_raw_data(x)) \
-        .map(lambda x: cleaners.clean_model_name(x)) \
+        .map(lambda x: cleaners.clean_model_name(x))
+
+    # Finds the price mapping for each car type
+    results_rdd = vrn_rdd_tfm \
         .map(lambda x: _car_type_to_price(prices_dict, x))
 
     # Add any new car types to the prices RDD
-    prices_rdd_tfm = _add_new_car_types(log, vrn_rdd_tfm, prices_rdd)
+    prices_rdd_tfm = _add_new_car_types(log, results_rdd, prices_rdd)
 
-    return vrn_rdd_tfm, prices_rdd_tfm
+    return vrn_rdd_tfm, results_rdd, prices_rdd_tfm

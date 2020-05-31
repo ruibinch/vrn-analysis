@@ -78,7 +78,9 @@ def clean_model_name(s: str) -> str:
         model_name = re.sub('SB', 'SPORTBACK', model_name)
         
         # e.g. convert "A3 SEDAN 1.0 TFSI S TRONIC (LED)" to "A3 SEDAN 1.0"
-        model_name = re.match('[AQRS](.*)(\d\.\d)', model_name)[0]
+        # FIXME: improve this
+        if re.match('[AQRS](.*)(\d\.\d)', model_name) is not None:
+            model_name = re.match('[AQRS](.*)(\d\.\d)', model_name)[0]
         return model_name
     
     def _clean_bmw(model_name: str) -> str:
