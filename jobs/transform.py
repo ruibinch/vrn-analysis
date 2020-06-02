@@ -30,7 +30,6 @@ def _get_prices_dict(prices_rdd: RDD) -> Dict[str, str]:
     """
 
     prices_dict = prices_rdd \
-        .map(lambda x: [x[0], x[1], x[2].strip()]) \
         .map(lambda x: (f'{x[0]} / {x[1]}', x[2])) \
         .collectAsMap()
     return prices_dict
@@ -81,7 +80,7 @@ def _add_new_car_types(log: logging.Log4j,
     prices_new_rdd = results_rdd \
         .filter(lambda x: constants.ERROR_MISSING_PRICE in x) \
         .map(lambda x: x.replace(constants.ERROR_MISSING_PRICE, '')) \
-        .map(lambda x: [*x.split(' / '), '0']) \
+        .map(lambda x: [*x.split(' / '), '0'])
 
     car_types_new = [f'{x[0]} / {x[1]}' for x in prices_new_rdd.collect()]
     log.info(f'New car types found: {car_types_new}')

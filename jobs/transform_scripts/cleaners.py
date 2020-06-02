@@ -92,21 +92,21 @@ def clean_model_name(s: str) -> str:
 
         # remove the following words
         # not sure if "SE" is integral
-        model_name = re.sub('\s(\d\.\d\w?|\d\s?S(EA)?TE?R?|(A|\d)WD|\dDR|ABS?|AUTO|A\/STR|A\/?T|(D\/)?A?(IR)?B(AG)?S?|DSC|EU6|FL|FOG\s?LIGHTS?|GAS\/D|HATCH|HBA|HID|HL|HUD|INT|LASERLIGHT|LED|NAV|NVD|PGR|RCP|RR\/ENT|SALOON|SE|SEDAN|SMT|SE\b|SR|SUNROOF|TC|XL$)', '', model_name)
+        model_name = re.sub('\s(\d\.\d\w?|\d\s?S(EA)?TE?R?|(A|\d)WD|\dDR|ABS?|AUTO|A\/STR|A\/?T|(D\/)?A?(IR)?B(AG)?S?|DSC|EU6|FL|FOG\s?LIGHTS?|GAS\/D|HATCH|HBA|HID|HL|HUD|INT|LASERLIGHT|LED|NAV|NVD|PGR|RCP|RR\/ENT|SALOON|SE(DAN)?|SMT|SR|SUNROOF|TC|XL$)', '', model_name)
         model_name = _remove_trailing_words(model_name, ['A'])
         
+        model_name = re.sub('630CI', '630I', model_name)
+        model_name = re.sub('740I', '740LI', model_name)
         model_name = re.sub('GT', 'GRAN TOURER', model_name)
         model_name = re.sub('(MSPT|MSPORT|M SPORT)', 'M-SPORT', model_name)
         model_name = re.sub('M-SPORTX', 'M-SPORT X', model_name)
-        model_name = re.sub('630CI', '630I', model_name)
-        model_name = re.sub('740I', '740LI', model_name)
+        model_name = re.sub('M6 4.4', 'M6 GRAN COUPE', model_name)
         model_name = re.sub('X3 SDRIVE 20I', 'X3 SDRIVE20I', model_name)
         model_name = re.sub('^X5 M$', 'X5 M-SPORT', model_name)
         model_name = re.sub('^X5$', 'X5 XLINE', model_name)
         model_name = re.sub('^X5 XL$', 'X5 XLINE', model_name)
         model_name = re.sub('^X6 M$', 'X6 M-SPORT', model_name)
         model_name = re.sub('X7 XDRIVE 40I', 'X7 XDRIVE40I', model_name)
-        model_name = re.sub('M6 4.4', 'M6 GRAN COUPE', model_name)
         return model_name
     
     def _clean_bentley(model_name: str) -> str:
@@ -153,7 +153,6 @@ def clean_model_name(s: str) -> str:
         return model_name
     
     def _clean_honda(model_name: str) -> str:
-        
         # remove the following words
         model_name = re.sub('\s(\dWD|ABS\b|AT|AUTO|CVT|D\/AIRBAG|EXV?-S|SR|VTI(R|S))', '', model_name)
         model_name = _remove_trailing_words(model_name, ['ABS', 'A', 'M'])
@@ -215,7 +214,7 @@ def clean_model_name(s: str) -> str:
     
     def _clean_maserati(model_name: str) -> str:
         # remove the following words
-        model_name = re.sub('\s(AUTO(MATIC)?|DIESEL|MY15|SR)', '', model_name)
+        model_name = re.sub('\s(\d\.\d|AUTO(MATIC)?|DIESEL|MY15|SR|V6)', '', model_name)
         model_name = re.sub('GHIBLI$', 'GHIBLI 3.0 V6', model_name)
         model_name = re.sub('GRANTURISMO$', 'GRANTURISMO 4.2', model_name)
         return model_name
@@ -240,7 +239,7 @@ def clean_model_name(s: str) -> str:
         model_name = re.sub('250CGI', '250 CGI', model_name)
         model_name = re.sub('4M\+', '4MATIC+', model_name)
         model_name = re.sub('AVG', 'AVANTGARDE', model_name)
-        model_name = re.sub('\bCAB(\b|$)', 'CABRIOLET', model_name)
+        model_name = re.sub('CAB$', 'CABRIOLET', model_name)
         model_name = re.sub('C 180', 'C180', model_name)
         model_name = re.sub('C180K', 'C180 AVANTGARDE', model_name)
         model_name = re.sub('CLS 350', 'CLS350', model_name)
@@ -279,10 +278,10 @@ def clean_model_name(s: str) -> str:
         model_name = re.sub('\s(\d\.\d|(A|F|\d)WD|ABS|ALL 4 AUTO|A\/?T|D\/A(IR)?B(AG)?|DSC|HB|HID|HUD|LED|NAV|SR|TC)', '', model_name)
         model_name = _remove_all_words_in_brackets(model_name)
         
+        model_name = re.sub('2DR', '3DR', model_name)
         model_name = re.sub('COOP S', 'COOPER S', model_name)
         model_name = re.sub('CAB-A|CABRIO', 'CABRIOLET', model_name)
         model_name = re.sub('COUNTRYMAN JCW', 'JCW COUNTRYMAN', model_name)
-        model_name = re.sub('1.6 3DR', '3DR 1.6', model_name)
 
         # standardise model names
         model_name = re.sub('JCW 3DR LCI', 'JCW COUNTRYMAN', model_name)
@@ -290,7 +289,8 @@ def clean_model_name(s: str) -> str:
     
     def _clean_mitsubishi(model_name: str) -> str:
         # remove the following words
-        model_name = re.sub('\s(5MT|SUNROOF)', '', model_name)
+        model_name = re.sub('\s(LANC|5MT|SUNROOF)', '', model_name)
+        model_name = re.sub('^LANC\s', '', model_name)
         return model_name
     
     def _clean_nissan(model_name: str) -> str:
@@ -360,9 +360,10 @@ def clean_model_name(s: str) -> str:
     def _clean_subaru(model_name: str) -> str:
         # remove the following words
         model_name = re.sub('\s(\dDR?|ABS|AIRBAG|\d?AT|AWD|CVT|EYESIGHT|SR)', '', model_name)
-        model_name = _remove_trailing_letters_behind_engine_cc(model_name)
 
         model_name = re.sub('2.0XT', '2.0I-L', model_name)
+        model_name = re.sub('IMPREZA 1.5R', 'IMPREZA 1.5', model_name)
+        model_name = re.sub('WRX STI 2.0M', 'WRX STI 2.0', model_name)
         return model_name
     
     def _clean_suzuki(model_name: str) -> str:
@@ -376,12 +377,13 @@ def clean_model_name(s: str) -> str:
         model_name = re.sub('ESTIMA', 'PREVIA', model_name)
 
         # remove the following words
-        model_name = re.sub('\s(\d(\s|-)SEATER|\dDR|\dWD|ABS|A\/?T|(D\/)?AIRBAG|AUTO|CVT|EXECUTIVE LOUNGE|M(OON)?R(OOF)?|PACKAGE|S\/R|SEDAN|ST(ANDAR)?D|SUV)', '', model_name)
+        model_name = re.sub('\s(7(\s|-)SEATER|\dDR|\dWD|ABS|A\/?T|(D\/)?AIRBAG|AUTO|CVT|EDITION|EXECUTIVE\sLOUNGE|G\'S|M(OON)?R(OOF)?|PACKAGE|PLATINUM|PREMIUM|S\/R|SEDAN|SELECTION|ST(ANDAR)?D|SUV)', '', model_name)
         model_name = re.sub('^TOYOTA ', '', model_name)
+        model_name = re.sub('-PACKAGE', '', model_name)
         model_name = _remove_all_words_in_brackets(model_name)
         model_name = _remove_trailing_words(model_name, ['A', 'M'])
         
-        # standardise model types cause somehow Alphard has so many different variations
+        # standardise Alphard model types cause somehow Alphard has so many different variations
         model_name = re.sub('2.5S', '2.5 S', model_name)
         model_name = re.sub('2.5 SA', '2.5 S-A', model_name)
         model_name = re.sub('2.5\s?S(-|\s)?C-?', '2.5 S-C', model_name)
@@ -396,8 +398,7 @@ def clean_model_name(s: str) -> str:
         model_name = re.sub('2.4Z', '2.4 Z', model_name)
         model_name = re.sub('2.5X', '2.5 X', model_name)
         model_name = re.sub('Z G-EDITION 3.5', '3.5 Z G-EDITION', model_name)
-        model_name = re.sub('3.5V', '3.5 V', model_name)
-        model_name = re.sub('3.5VL', '3.5 VL', model_name)
+        model_name = re.sub('3.5VL?', '3.5 V', model_name)
         model_name = re.sub('3.5Z', '3.5 Z', model_name)
         model_name = re.sub('3.5ZA', '3.5 ZA', model_name)
         model_name = re.sub('VELLFIRE ELEGANCE', 'VELLFIRE 2.5', model_name)
@@ -406,8 +407,15 @@ def clean_model_name(s: str) -> str:
         model_name = re.sub('1.8X', '1.8 X', model_name)
         # Lexus
         model_name = re.sub('ES300H$', 'ES300H EXECUTIVE', model_name)
+        # general
+        model_name = re.sub('8 SEATER', '8-SEATER', model_name)
+        model_name = re.sub('ALTIS 1.6L$', 'ALTIS 1.6', model_name)
+        model_name = re.sub('HYBRID 2.5G$', 'HYBRID 2.5', model_name)
+        model_name = re.sub('^HARRIER(\sELEGANCE)? 2.0$', 'HARRIER 2.0 ELEGANCE', model_name)
+        model_name = re.sub('^PREVIA(\sHYBRID)? 2.4 X$', 'PREVIA AERAS 2.4', model_name)
+        model_name = re.sub('RUSH 1.5G$', 'RUSH 1.5', model_name)
+        model_name = re.sub('VIOS 1.5E$', 'VIOS 1.5', model_name)
         
-        model_name = _remove_trailing_letters_behind_engine_cc(model_name)
         return model_name
     
     def _clean_volkswagen(model_name: str) -> str:

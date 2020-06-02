@@ -10,7 +10,7 @@ CONFIG_GSHEET_WS_VRN_CLEANED = 'gsheet_ws_vrn_cleaned'
 
 # Fixed constants
 GSHEET_PRICES_HEADER_ROW = ['Make', 'Model', 'Price']
-ERROR_MISSING_PRICE = 'MISSING_PRICE:'
+ERROR_MISSING_PRICE = 'MISSINGPRICE:'
 
 # General strings
 UPDATED_RANGE = 'updatedRange'
