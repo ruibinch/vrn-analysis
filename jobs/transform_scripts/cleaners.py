@@ -202,6 +202,7 @@ def clean_model_name(s: str) -> str:
     def _clean_lamborghini(model_name: str) -> str:
         # remove the following words
         model_name = re.sub('\s(SMT)', '', model_name)
+        model_name = re.sub('SV J', 'SVJ', model_name)
         return model_name
     
     def _clean_land_rover(model_name: str) -> str:
@@ -246,8 +247,10 @@ def clean_model_name(s: str) -> str:
         model_name = re.sub('E 200', 'E200', model_name)
         model_name = re.sub('E 250', 'E250', model_name)
         model_name = re.sub('SALN', 'SALOON', model_name)
+        model_name = re.sub('SL 350', 'SL350', model_name)
+        model_name = re.sub('SLK 350', 'SLK350', model_name)
         # standardise "AMG" as the 1st word for AMG types (i.e. 2 numbers)
-        # for other series with AMG engines, standardise "AMG" as the 2nd word
+        # for other series with AMG trims, standardise "AMG" as the 2nd word
         model_name = re.sub('A45 AMG', 'AMG A45', model_name)
         model_name = re.sub('C43 AMG', 'AMG C43', model_name)
         model_name = re.sub('C63 AMG', 'AMG C63', model_name)
@@ -264,7 +267,7 @@ def clean_model_name(s: str) -> str:
         model_name = re.sub('^AMG C63 S$', 'AMG C63 S COUPE', model_name)
         model_name = re.sub('^AMG G63$', 'AMG G63 4MATIC', model_name)
         model_name = re.sub('CGI|KOMP(RESSOR)?|SEDAN', 'AVANTGARDE', model_name)
-        model_name = re.sub('^CLA180$', 'CLA180 COUPE', model_name)
+        model_name = re.sub('^CLA180$', 'CLA180 COUPE', model_name) #FIXME: this is not true
         model_name = re.sub('^CLA200$', 'CLA200 COUPE', model_name)
         model_name = re.sub('^E200$', 'E200 AVANTGARDE', model_name)
         model_name = re.sub('^E250(\sEXCLUSIVE)?$', 'E250 AVANTGARDE', model_name)
@@ -294,6 +297,7 @@ def clean_model_name(s: str) -> str:
         return model_name
     
     def _clean_nissan(model_name: str) -> str:
+        # remove the following words
         model_name = re.sub('\s(\dDR|\d-STR|\dWD|ABS|AUTO|CVT|D\/AIRBAG|DIG-T|S\/R)', '', model_name)
         model_name = _remove_trailing_letters_behind_engine_cc(model_name)
         model_name = _remove_trailing_words(model_name, ['A'])
@@ -335,6 +339,8 @@ def clean_model_name(s: str) -> str:
         model_name = re.sub('\s(\d.\d\w?|\dDR|\dWD|\d-SEAT|ABS|A\/?T|AUTO|D\/A(IR)?B(AG)?|COUPE|GAS\/D|HID|MY\d{2}|NAV|S\/R|SEDAN|SERIES II|SR|TC|TV|V12)', '', model_name)
         model_name = _remove_all_words_in_brackets(model_name)
         model_name = _remove_trailing_words(model_name, ['A'])
+        
+        model_name = re.sub('EXTENDED WHEELBASE', 'EWB', model_name)
         return model_name
     
     def _clean_ruf(model_name: str) -> str:
@@ -343,17 +349,17 @@ def clean_model_name(s: str) -> str:
         return model_name
     
     def _clean_seat(model_name: str) -> str:
-        model_name = re.sub('XCELL', 'XCELLENCE', model_name)
-        
         # remove the following words
         model_name = re.sub('\s(\d.\d|\dAT|STYLE|TSI)', '', model_name)
+        
+        model_name = re.sub('XCELL', 'XCELLENCE', model_name)
         return model_name
     
     def _clean_skoda(model_name: str) -> str:
-        model_name = re.sub('L&K', 'LAURIN&KLEMENT', model_name)
-        
         # remove the following words
         model_name = re.sub('\s(\d.\d|4x4|TSI)', '', model_name)
+        
+        model_name = re.sub('L&K', 'LAURIN&KLEMENT', model_name)
         model_name = _remove_all_words_in_brackets(model_name)
         return model_name
     
@@ -410,8 +416,8 @@ def clean_model_name(s: str) -> str:
         # general
         model_name = re.sub('8 SEATER', '8-SEATER', model_name)
         model_name = re.sub('ALTIS 1.6L$', 'ALTIS 1.6', model_name)
-        model_name = re.sub('HYBRID 2.5G$', 'HYBRID 2.5', model_name)
         model_name = re.sub('^HARRIER(\sELEGANCE)? 2.0$', 'HARRIER 2.0 ELEGANCE', model_name)
+        model_name = re.sub('HYBRID 2.5G$', 'HYBRID 2.5', model_name)
         model_name = re.sub('^PREVIA(\sHYBRID)? 2.4 X$', 'PREVIA AERAS 2.4', model_name)
         model_name = re.sub('RUSH 1.5G$', 'RUSH 1.5', model_name)
         model_name = re.sub('VIOS 1.5E$', 'VIOS 1.5', model_name)
