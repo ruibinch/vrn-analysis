@@ -23,4 +23,7 @@ def is_car_type(s: str) -> bool:
                 or re.match('^(S|E)[A-Z]$', s) is not None \
                 or re.match('^(S)[A-Z]{2}$', s) is not None)   
     
-    return not (s.isnumeric() or s == '' or s == '-' or _is_vrn_letters(s))
+    return not (s.isnumeric()
+                or _is_vrn_letters(s)
+                or re.match('Series|-', s) is not None
+                or s == '')

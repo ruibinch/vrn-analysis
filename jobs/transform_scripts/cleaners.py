@@ -111,14 +111,13 @@ def clean_model_name(s: str) -> str:
     
     def _clean_bentley(model_name: str) -> str:
         # remove the following words
-        model_name = re.sub('\s(\d\sSEATER|ABS|A\/?T|A(UTO)?|D\/AB|DIESEL|\dWD|S\/?R|SUNROOF|WITHOUT)', '', model_name)
+        model_name = re.sub('\s(\d\.\d|\d\sSEATER|ABS|A\/?T|A(UTO)?|D\/AB|DIESEL|\dWD|S\/?R|SUNROOF|WITHOUT)', '', model_name)
         
-        model_name = re.sub('BENTAYGA 6.0', 'BENTAYGA V8', model_name)
-        model_name = re.sub('CONTI FS', 'CONTINENTAL FLYING SPUR 6.0', model_name)
-        model_name = re.sub('GT SPEED$', 'GT SPEED 6.0', model_name)
+        model_name = re.sub('^BENTAYGA$', 'BENTAYGA V8', model_name)
+        model_name = re.sub('CONTI FS', 'CONTINENTAL FLYING SPUR', model_name)
         model_name = re.sub('GT V8 S', 'GT V8', model_name)
         model_name = re.sub('GTC V8', 'GT V8 CONVERTIBLE', model_name)
-        model_name = re.sub('SPUR V8 S', 'SPUR V8 4.0', model_name)
+        model_name = _remove_trailing_words(model_name, ['S'])
         return model_name
     
     def _clean_citroen(model_name: str) -> str:
