@@ -215,8 +215,6 @@ def clean_model_name(s: str) -> str:
     def _clean_maserati(model_name: str) -> str:
         # remove the following words
         model_name = re.sub('\s(\d\.\d|AUTO(MATIC)?|DIESEL|MY15|SR|V6)', '', model_name)
-        model_name = re.sub('GHIBLI$', 'GHIBLI 3.0 V6', model_name)
-        model_name = re.sub('GRANTURISMO$', 'GRANTURISMO 4.2', model_name)
         return model_name
     
     def _clean_mazda(model_name: str) -> str:
