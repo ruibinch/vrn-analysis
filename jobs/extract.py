@@ -29,7 +29,7 @@ def run(sc: SparkContext,
     """
 
     # config values used
-    spreadsheet_id = config[constants.CONFIG_GSHEET_SPREADSHEET_ID]
+    spreadsheet_id = config[constants.CONFIG_GSHEET_SPREADSHEET_ID_DEV]
     ws_title_vrn = config[constants.CONFIG_GSHEET_WS_VRN]
     ws_title_prices = config[constants.CONFIG_GSHEET_WS_PRICES]
 

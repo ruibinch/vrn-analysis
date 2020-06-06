@@ -2,7 +2,8 @@
 FILEPATH_GSHEET_CREDS = 'configs/gsheet_creds.json'
 
 # Config values
-CONFIG_GSHEET_SPREADSHEET_ID = 'gsheet_spreadsheet_id'
+CONFIG_GSHEET_SPREADSHEET_ID_DEV = 'gsheet_spreadsheet_id_dev'
+CONFIG_GSHEET_SPREADSHEET_ID_PROD = 'gsheet_spreadsheet_id_prod'
 CONFIG_GSHEET_WS_PRICES = 'gsheet_ws_prices'
 CONFIG_GSHEET_WS_RESULTS = 'gsheet_ws_results'
 CONFIG_GSHEET_WS_VRN = 'gsheet_ws_vrn'

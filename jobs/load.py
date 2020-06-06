@@ -50,7 +50,7 @@ def run(log: logging.Log4j,
     """
 
     # config values used
-    spreadsheet_id = config[constants.CONFIG_GSHEET_SPREADSHEET_ID]
+    spreadsheet_id = config[constants.CONFIG_GSHEET_SPREADSHEET_ID_DEV]
     ws_title_vrn_cleaned = config[constants.CONFIG_GSHEET_WS_VRN_CLEANED]
     ws_title_results = config[constants.CONFIG_GSHEET_WS_RESULTS]
     ws_title_prices = config[constants.CONFIG_GSHEET_WS_PRICES]

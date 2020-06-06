@@ -1,5 +1,6 @@
 {
-    "gsheet_spreadsheet_id": "18KGQFVDZ8wgj2pb1ErKh2QXGtF1N2U17GiwRBcXI1TI",
+    "gsheet_spreadsheet_id_dev": "18KGQFVDZ8wgj2pb1ErKh2QXGtF1N2U17GiwRBcXI1TI",
+    "gsheet_spreadsheet_id_prod": "1SjCxfvHsLSk2Yh-AFGY2c1YOsvFybGRvZOuU_uaNuVY",
     "gsheet_ws_vrn": "VRN",
     "gsheet_ws_prices": "Prices",
     "gsheet_ws_results": "Results",
