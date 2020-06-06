@@ -18,23 +18,24 @@ This project comprises of 2 components:
 
 **Google Sheets** is used for both the data source and destination, with interactions being made through the Google Sheets API.
 
-A detailed writeup of the pipeline can be found in the "ETL pipeline" notebook in the `/notebooks` folder and is directly accessible [here](https://nbviewer.jupyter.org/github/ruibinch/vrn-analysis/blob/master/notebooks/ETL%20pipeline.ipynb)
+A detailed writeup of the pipeline can be found in the "ETL pipeline" notebook in the `/notebooks` folder and is directly accessible [here](https://nbviewer.jupyter.org/github/ruibinch/vrn-analysis/blob/master/notebooks/ETL%20pipeline.ipynb).
 
 ### Data analysis
 
 A **Jupyter notebook** is used to perform the data analysis, with the aid of the standard suite of tools - **pandas** for data manipulation and **seaborn** for data visualisation.
 
-The data is analysed based on a question-based structure where the following questions are answered:
+The data is analysed based on the following series of questions:
 
 - Which plate number is the most valuable?
 - What is the distribution of car prices for each plate number?
+- Which letter series is the most valuable?
 - Which are the most expensive car models?
 - Which are the most expensive car brands?
 - What is the distribution of car prices for each brand?
 - Which are the most popular car brands?
 - Which are the most popular car models?
 
-This analysis can be found in the "SG VRN analysis" notebook in the `/notebooks` folder and is directly accessible [here](https://nbviewer.jupyter.org/github/ruibinch/vrn-analysis/blob/master/notebooks/SG%20VRN%20analysis.ipynb)
+This analysis can be found in the "SG VRN analysis" notebook in the `/notebooks` folder and is directly accessible [here](https://nbviewer.jupyter.org/github/ruibinch/vrn-analysis/blob/master/notebooks/SG%20VRN%20analysis.ipynb).
 
 ## Folder Structure
 
