@@ -6,7 +6,7 @@ There are some especially prized number plates - these are typically 1- or 2-dig
 
 This set me thinking - **which number is the most desirable/valuable**?
 
-In this project, I collect a list of car models possessing selected number plates and subsequently attempt to explore which plate number is the most highly valued, as well as some analysis of car prices in general.
+In this project, I collect a list of car models possessing selected number plates and subsequently attempt to explore which plate number has the highest value and whether there is a strong correlation between value and desirability.
 
 ## Components
 
@@ -26,9 +26,9 @@ A **Jupyter notebook** is used to perform the data analysis, with the aid of the
 
 The data is analysed based on the following series of questions:
 
-- Which plate number is the most valuable?
+- Which plate number has the highest value?
 - What is the distribution of car prices for each plate number?
-- Which letter series is the most valuable?
+- Which letter series has the highest value?
 - Which are the most expensive car models?
 - Which are the most expensive car brands?
 - What is the distribution of car prices for each brand?
